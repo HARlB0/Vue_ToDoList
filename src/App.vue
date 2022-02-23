@@ -11,7 +11,7 @@
               <input v-model="input" placeholder="할 일을 입력하세요." />
             </div>
             <div class="add_button" v-on:click="addTodo" >
-              <img src="./img/add.png"/>
+              <img src="./img/add.png" />
             </div>
           </div>
           <div class="body">
