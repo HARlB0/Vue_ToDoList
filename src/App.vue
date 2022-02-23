@@ -1,21 +1,24 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+    <div class="bg">
+      <div class="todolist">
+        <div class="list_box">
+          <div class="title">
+            <h1>{{title}}</h1>
+          </div>
+          <div class="add">
+            <div class="input_box">
+              <input v-model="input" placeholder="할 일을 입력하세요." />
+            </div>
+            <div class="add_button" v-on:click="addTodo" >
+              <img src="./img/add.png"/>
+            </div>
+          </div>
+          <div class="body">
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -24,10 +27,18 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      title: "To Do List",
+      todo: {
+
+      },
+    };
+  },
+  methods: {
+    addTodo() {
+      console.log('hello')
     }
   }
-}
+};
 </script>
 
 <style>
@@ -40,21 +51,30 @@ export default {
   margin-top: 60px;
 }
 
-h1, h2 {
-  font-weight: normal;
+.todolist .add {
+  display: flex;
+  margin : 20px;
+  justify-content: center;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.add .input_box {
+  border-bottom: solid 5px #5A5A5A;
+  width: 430px;
+  margin-right: 20px;
 }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
+.add .input_box input {
+  height: 100%;
+  width: 100%;
+  border-style: none;
+  padding-left: 10px;
+  font-size: 20px;
+  outline: none;
+  font-weight: bold;
 }
 
-a {
-  color: #42b983;
+.add_button img {
+  width: 50px;
+  height: 50px;
 }
 </style>
