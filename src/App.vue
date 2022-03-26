@@ -15,6 +15,9 @@
             </div>
           </div>
           <div class="body">
+            <ul>
+              <li v-for="item in todos" v-bind:key="item"> {{ item.content }}</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -28,9 +31,11 @@ export default {
   data () {
     return {
       title: "To Do List",
-      todo: {
-
-      },
+      todos: [
+        {id: 1, content: 밥먹기, toggle: false, modify: false},
+        {id: 2, content: 숨쉬기, toggle: false, modify: false},
+        {id: 3, content: 잠자기, toggle: false, modify: false}
+      ]
     };
   },
   methods: {
