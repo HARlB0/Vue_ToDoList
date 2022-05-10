@@ -8,16 +8,26 @@
           </div>
           <div class="add">
             <div class="input_box">
-              <input v-model="input" placeholder="할 일을 입력하세요." />
+              <input id="input" v-model="input" placeholder="할 일을 입력하세요." />
             </div>
             <div class="add_button" v-on:click="addTodo" >
               <img src="./img/add.png" />
             </div>
           </div>
           <div class="body">
-            <ul>
-              <li v-for="item in todos" v-bind:key="item"> {{ item.content }}</li>
-            </ul>
+            <div class="todoView" v-for="item in todos" v-bind:key="item.id">
+              <span>{{ item.content }}</span>
+              <div class="modifyDelete">
+                <div v-on:click="onOffToggle(item)" >
+                  <img v-if="item.toggle===false" src="./img/pencil.png" />
+                  <img v-else-if="item.toggle===true" src="./img/confirm.png" />
+                </div>
+                <div v-on:click="deleteTodo(item)" >
+                  <img v-if="item.modify===false" src="./img/delete.png" />
+                  <img v-else-if="item.modify===true?deleteTodo():console.log('hi')" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -30,17 +40,43 @@ export default {
   name: 'app',
   data () {
     return {
+      input: '',
       title: "To Do List",
-      todos: [
-        {id: 1, content: 밥먹기, toggle: false, modify: false},
-        {id: 2, content: 숨쉬기, toggle: false, modify: false},
-        {id: 3, content: 잠자기, toggle: false, modify: false}
-      ]
+      todos: []
     };
   },
   methods: {
     addTodo() {
       console.log('hello')
+      const todoElement = []
+      console.log(this.todos)
+      if(this.todos.length == 0){
+        todoElement.id = 1
+        console.log(todoElement.id)
+      } else {
+        todoElement.id = this.todos[this.todos.length-1].id +1
+      }
+      todoElement.content = this.input
+      todoElement.toggle = false
+      todoElement.modify = false
+      if(input.value == '') {
+        alert('칸이 비었습니다.')
+      } else {
+        this.todos.push(...[todoElement])
+        this.input = ''
+      }
+    },
+    onOffToggle(item) {
+      console.log('눌려')
+      const arr = [...[this.todos]]
+      console.log('arr', arr)
+      arr.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
+      this.todos.push(...[arr])
+      console.log('arr', arr)
+      console.log(this.todos)
+    },
+    deleteTodo() {
+      // this.todos.map(x => (x.modify === item.modify) ?)
     }
   }
 };
@@ -56,10 +92,45 @@ export default {
   margin-top: 60px;
 }
 
+#app .bg {
+  display: flex;
+  justify-content: center;
+}
+
+.todolist {
+  display: flex;
+  justify-content: center;
+  max-width: 700px;
+}
+
 .todolist .add {
   display: flex;
   margin : 20px;
   justify-content: center;
+}
+
+.todolist .list_box .body {
+  margin: 20px;
+}
+.todolist .list_box .body .todoView span {
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.todolist .list_box .body .todoView span::before {
+  content: "■";
+  color: #8b0e97;
+  margin-right: 5px;
+  font-size: 20px;
+}
+.todolist .list_box .body .todoView {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todolist .list_box .body .todoView .modifyDelete {
+  display: flex;
 }
 
 .add .input_box {
@@ -79,6 +150,11 @@ export default {
 }
 
 .add_button img {
+  width: 50px;
+  height: 50px;
+}
+
+img {
   width: 50px;
   height: 50px;
 }
