@@ -16,7 +16,12 @@
           </div>
           <div class="body">
             <div class="todoView" v-for="item in todos" v-bind:key="item.id">
-              <span>{{ item.content }}</span>
+              <div v-if="item.toggle === false">
+                <span>{{ item.content }}</span>
+              </div>
+              <div class="todoInput" v-else>
+                <input v-model=item.content />
+              </div>
               <div class="modifyDelete">
                 <div v-on:click="onOffToggle(item)" >
                   <img v-if="item.toggle===false" src="./img/pencil.png" />
@@ -47,12 +52,9 @@ export default {
   },
   methods: {
     addTodo() {
-      console.log('hello')
       const todoElement = []
-      console.log(this.todos)
       if(this.todos.length == 0){
         todoElement.id = 1
-        console.log(todoElement.id)
       } else {
         todoElement.id = this.todos[this.todos.length-1].id +1
       }
@@ -65,27 +67,24 @@ export default {
         this.todos.push(...[todoElement])
         this.input = ''
       }
-    // },
-    // onOffToggle(item) {
-    //   console.log('눌려')
-    //   const arr = [...this.todos]
-    //   console.log('arr', arr)
-    //   console.log('item.id', item.id)
-    //   console.log('item', item)
-    //   arr.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
-    //   // this.todos.push(...[arr])
-    //   console.log('arr', arr)
-    //   this.todos.push(...[arr])
-    //   console.log(this.todos)
+    },
+    onOffToggle(item) {
+      if(item.toggle===true){
+        console.log('hi')
+        const arr = this.todos.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
+        this.todos = arr
+      } else {
+        console.log('눌려')
+        console.log(this.todos)
+        const arr = this.todos.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
+        console.log(arr)
+        this.todos = arr
+        console.log(this.todos)
+      }
     },
     deleteTodo(item) {
-      console.log(this.todos)
-      console.log(item, 'item입니다')
-      console.log(item.id, 'item.id입니다')
       const arr = this.todos.filter(x => x.id!==item.id)
       this.todos = arr
-      // console.log(arr)
-      // this.todos.push(...[arr])
     }
   }
 };
@@ -132,6 +131,14 @@ export default {
   margin-right: 5px;
   font-size: 20px;
 }
+
+.todolist .list_box .body .todoInput::before {
+  content: "■";
+  color: #8b0e97;
+  margin-right: 5px;
+  font-size: 20px;
+}
+
 .todolist .list_box .body .todoView {
   display: flex;
   align-items: center;
@@ -166,5 +173,19 @@ export default {
 img {
   width: 50px;
   height: 50px;
+}
+
+.body input {
+  border: none;
+  border-bottom: 2px solid black;
+  width: 100%;
+  font-size: 20px;
+  outline: none;
+}
+
+.body .todoInput {
+  width: 100%;
+  margin-right: 20px;
+  display: flex;
 }
 </style>
