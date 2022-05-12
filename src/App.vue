@@ -24,7 +24,7 @@
                 </div>
                 <div v-on:click="deleteTodo(item)" >
                   <img v-if="item.modify===false" src="./img/delete.png" />
-                  <img v-else-if="item.modify===true?deleteTodo():console.log('hi')" />
+                  <img v-else-if="item.modify===true?deleteTodo(item):console.log('hi')" />
                 </div>
               </div>
             </div>
@@ -65,18 +65,27 @@ export default {
         this.todos.push(...[todoElement])
         this.input = ''
       }
+    // },
+    // onOffToggle(item) {
+    //   console.log('눌려')
+    //   const arr = [...this.todos]
+    //   console.log('arr', arr)
+    //   console.log('item.id', item.id)
+    //   console.log('item', item)
+    //   arr.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
+    //   // this.todos.push(...[arr])
+    //   console.log('arr', arr)
+    //   this.todos.push(...[arr])
+    //   console.log(this.todos)
     },
-    onOffToggle(item) {
-      console.log('눌려')
-      const arr = [...[this.todos]]
-      console.log('arr', arr)
-      arr.map(x => (x.id === item.id) ? { ...x, toggle: !x.toggle } : { ...x })
-      this.todos.push(...[arr])
-      console.log('arr', arr)
+    deleteTodo(item) {
       console.log(this.todos)
-    },
-    deleteTodo() {
-      // this.todos.map(x => (x.modify === item.modify) ?)
+      console.log(item, 'item입니다')
+      console.log(item.id, 'item.id입니다')
+      const arr = this.todos.filter(x => x.id!==item.id)
+      this.todos = arr
+      // console.log(arr)
+      // this.todos.push(...[arr])
     }
   }
 };
